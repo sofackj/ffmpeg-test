@@ -1,0 +1,9 @@
+# Update system and setup of ffmpeg and git
+apt update -y && apt upgrade -y && apt install ffmpeg -y && apt install git -y
+
+# Python 3.10 setup with the necessary modules
+apt install software-properties-common -y && add-apt-repository ppa:deadsnakes/ppa -y && apt-get -y install python3-pip
+pip install --upgrade pip && pip install moviepy
+
+# Setup place for the app
+cd /var/ && git clone https://github.com/sofackj/ffmpeg-test.git

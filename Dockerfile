@@ -10,7 +10,7 @@ RUN apt install ffmpeg -y && apt install git -y
 RUN apt install software-properties-common -y && add-apt-repository ppa:deadsnakes/ppa -y
 
 # Install pip and the moviepy module
-apt-get -y install python3-pip && pip install --upgrade pip && pip install moviepy
+RUN apt-get -y install python3-pip && pip install --upgrade pip && pip install moviepy
 
 # Setup the git repo
 RUN mkdir /var/app && cd /var/app/ && git clone https://github.com/sofackj/ffmpeg-test.git 

@@ -1,3 +1,5 @@
-my_env/
-*.txt
-*.mp4
+/test-app
+/my-env
+/__pycache__
+tktest.py
+requirements.txt

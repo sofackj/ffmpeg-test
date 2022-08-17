@@ -1,17 +1,38 @@
 import os
-from moviepy.editor import *
 
-mp4_path = "/var/media/mp4_files/"
-mp3_path = "/var/media/mp3_files/"
+from functions import *
+from tkfunctions import *
+from pilfunctions import *
 
-mp4_list = [file for file in os.listdir(mp4_path) if "mp4" in file]
+path = "test-app/outputs"
+entry_path = "test-app/entries"
+# entry_path = "/Users/juliensofack-kreutzer/Desktop/test/new"
 
-for my_mp4 in mp4_list:
-    mp4_file = mp4_path + my_mp4
-    mp3_file = mp3_path + "".join(my_mp4.split('.')[:-1]) + '.mp3'
+def app(number_of_media):
+    # Clean the outputs diretory
+    remove_directory_files(path)
+    # Add files in the output directory
+    move_files(random_items_list(list_files_from_path(entry_path), number_of_media), path)
+    # List files in the outputs directory as object
+    origin_list = list_files_from_path(path)
+    # Generate ids for each object
+    generate_id(origin_list)
+    # Duplicate the list to keep a copy in case <- pop will be used
+    files_list = origin_list.copy()
 
-    videoclip = VideoFileClip(mp4_file)
-    audioclip = videoclip.audio
-    audioclip.write_audiofile(mp3_file)
-    audioclip.close()
-    videoclip.close()
+    phase = 0
+
+    while len(files_list) > 1:
+        tournament = create_matches(files_list)
+        list_of_matches(tournament)
+        setup_score(tournament)
+        files_list = qualifications_for_next_phase(path, files_list, phase)
+        phase += 1
+    
+    the_winner = files_list[0]
+    final_participant(path, the_winner, phase)
+    the_winner.check_participant(the_winner.new_file_path)
+
+if __name__ == '__main__':
+    app(16)
+

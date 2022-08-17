@@ -27,9 +27,7 @@ def list_of_matches(list_matches: tuple):
     for count, match in enumerate(list_matches):
 
         a, b = match.participants
-        a.tk_image = open_image_and_resize(a.file_path, 200)
-        b.tk_image = open_image_and_resize(b.file_path, 200)
-        match.frame_for_match(my_frame, match.match_id, a.tk_image, b.tk_image)
+        match.frame_for_match(my_frame, match.match_id)
 
     button_frame = Frame(fenetre, borderwidth=4, bg="gray")
     button_frame.pack(side=BOTTOM, padx=10, pady=10)

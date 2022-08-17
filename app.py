@@ -3,8 +3,8 @@ from tkfunctions import *
 from pilfunctions import *
 
 path = "test-app/outputs"
-entry_path = "test-app/entries"
-# entry_path = "/Users/juliensofack-kreutzer/Desktop/test/new"
+# entry_path = "test-app/entries"
+entry_path = "/Users/juliensofack-kreutzer/Desktop/test/new"
 
 def app(number_of_media):
     # Clean the outputs diretory

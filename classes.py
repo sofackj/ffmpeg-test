@@ -40,9 +40,9 @@ class Participant:
         rb.pack(pady=10)
         return rb
     
-    def display_picture(self, window, img):
+    def display_picture(self, window):
         # Button to display picture
-        my_button =  Button(window, image=img, command=lambda : self.check_participant(self.file_path))
+        my_button =  Button(window, text="show", command=lambda : self.check_participant(self.file_path))
         my_button.pack()
         return my_button
 
@@ -55,7 +55,7 @@ class Match:
         self.match_id = match_id
         self.winner = None
     
-    def frame_for_match(self, window, match_id, image_a, image_b):
+    def frame_for_match(self, window, match_id):
         first, second = self.participants
         # Main frame
         my_frame = Frame(window, borderwidth=4)
@@ -72,13 +72,13 @@ class Match:
         my_first_frame = first.frame_participant(my_frame, LEFT)
         first_lb = first.label_participant(my_first_frame)
         first_rb = first.radiobutton(my_first_frame, self.winner)
-        first_button = first.display_picture(my_first_frame, image_a)
+        first_button = first.display_picture(my_first_frame)
 
         # Right frame
         my_second_frame = second.frame_participant(my_frame, RIGHT)
         second_lb = second.label_participant(my_second_frame)
         second_rb = second.radiobutton(my_second_frame, self.winner)
-        second_button = second.display_picture(my_second_frame, image_b)
+        second_button = second.display_picture(my_second_frame)
         # return my_frame, my_first_frame, my_second_frame
 
 class Window(Tk):

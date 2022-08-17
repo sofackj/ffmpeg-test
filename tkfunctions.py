@@ -14,13 +14,12 @@ def list_of_matches(list_matches: tuple):
     my_frame = Frame(my_canvas)
     my_scrollbar = Scrollbar(fenetre, width=40, orient="vertical", command=my_canvas.yview)
     my_canvas.configure(yscrollcommand=my_scrollbar.set)
-
     my_frame.pack()
     my_scrollbar.pack(side="right", fill="y")
     my_canvas.pack(side="left", fill="both", expand=True)
-
+    # Create windows via the canvas corresponding to the frame
     my_canvas.create_window((0,0), window=my_frame, anchor="nw")
-
+    # Bind the scrollbar to the canvas containing the frame
     my_frame.bind("<Configure>", lambda event, canvas=my_canvas: canvas.configure(scrollregion=canvas.bbox("all")))
 
     # List of matches to display in the window

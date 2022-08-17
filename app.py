@@ -1,5 +1,3 @@
-import os
-
 from functions import *
 from tkfunctions import *
 from pilfunctions import *

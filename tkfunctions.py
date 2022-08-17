@@ -1,5 +1,6 @@
 from tkinter import *
 from classes import *
+from tkVideoPlayer import TkinterVideo
 
 def list_of_matches(list_matches: tuple):
     # Window fo matches

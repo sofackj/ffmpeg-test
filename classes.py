@@ -34,7 +34,7 @@ class Participant:
 
     def radiobutton(self, window, result):
         # Radiobutton to choose the winner
-        rb = Radiobutton(window, text=self.filename, variable=result, value=self.id)
+        rb = Radiobutton(window, variable=result, value=self.id)
         rb.pack()
         return rb
     
@@ -53,13 +53,14 @@ class Match:
         self.match_id = match_id
         self.winner = None
     
-    def frame_for_match(self, window, match_id, x, y):
+    def frame_for_match(self, window, match_id):
         first, second = self.participants
         # Main frame
         my_frame = Frame(window, borderwidth=4)
-        my_frame.grid(row=x, column=y, padx=20, pady=20)
+        my_frame.pack(padx=20, pady=20)
+        # my_frame.grid(row=x, column=y, padx=20, pady=20)
         # Match label
-        my_label = Label(my_frame, text=f"Match {match_id}\n{first.filename} VS {second.filename}")
+        my_label = Label(my_frame, text=f"Match {match_id}\n{first.participant_name}\t \t{second.participant_name}")
         my_label.pack()
 
         # Pick up result of the match in self.winner with radiobuttons
@@ -67,13 +68,11 @@ class Match:
 
         # Left frame
         my_first_frame = first.frame_participant(my_frame, LEFT)
-        # first_label = first.label_participant(my_first_frame)
         first_rb = first.radiobutton(my_first_frame, self.winner)
         first_button = first.display_picture(my_first_frame)
 
         # Right frame
         my_second_frame = second.frame_participant(my_frame, RIGHT)
-        # second_label = second.label_participant(my_second_frame)
         second_rb = second.radiobutton(my_second_frame, self.winner)
         second_button = second.display_picture(my_second_frame)
         return my_frame

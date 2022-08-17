@@ -17,6 +17,7 @@ def app(number_of_media):
     origin_list = list_files_from_path(path)
     # Generate ids for each object
     generate_id(origin_list)
+    generate_name(origin_list)
     # Duplicate the list to keep a copy in case <- pop will be used
     files_list = origin_list.copy()
 
@@ -34,5 +35,5 @@ def app(number_of_media):
     the_winner.check_participant(the_winner.new_file_path)
 
 if __name__ == '__main__':
-    app(8)
+    app(16)
 

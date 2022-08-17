@@ -36,12 +36,13 @@ def move_files(start_list: list, dest_path: str):
 
 def generate_id(start_list: list):
     # Generate IDs for each media
+    for count, participant in enumerate(start_list):
+        participant.id = str(200+count)
+
+def generate_name(start_list: list):
     for participant in start_list:
-        while True:
-            id = randint(101, 501)
-            if str(id) not in [participant.id for participant in start_list]:
-                participant.id = str(id)
-                break
+        filename = participant.filename
+        participant.participant_name = " ".join(filename.split(".")[0].split("-"))
 
 def remove_directory_files(directory_path):
     # Be sure that no files are present

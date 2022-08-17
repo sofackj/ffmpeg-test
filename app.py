@@ -15,8 +15,9 @@ def app(number_of_media):
     move_files(random_items_list(list_files_from_path(entry_path), number_of_media), path)
     # List files in the outputs directory as object
     origin_list = list_files_from_path(path)
-    # Generate ids for each object
+    # Generate id for each object
     generate_id(origin_list)
+    # Generate name for each object
     generate_name(origin_list)
     # Duplicate the list to keep a copy in case <- pop will be used
     files_list = origin_list.copy()

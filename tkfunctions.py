@@ -1,23 +1,21 @@
-from sqlite3 import Row
 from tkinter import *
-from tkinter.tix import COLUMN
 from classes import *
 
 def list_of_matches(list_matches: tuple):
     # Window fo matches
     fenetre = Tk()
-    fenetre.geometry("600x600")
+    fenetre.geometry("750x600")
     fenetre.resizable(False, False)
     fenetre["bg"] = "white"
     #-----frame examples -----------------------------------------------------------
     # Setup the scrollbar
-
+    # Setuo canvas, scollbar and frame
     my_canvas = Canvas(fenetre)
     my_frame = Frame(my_canvas)
     my_scrollbar = Scrollbar(fenetre, width=40, orient="vertical", command=my_canvas.yview)
     my_canvas.configure(yscrollcommand=my_scrollbar.set)
 
-    my_frame.grid(column=2)
+    my_frame.pack()
     my_scrollbar.pack(side="right", fill="y")
     my_canvas.pack(side="left", fill="both", expand=True)
 
@@ -27,11 +25,15 @@ def list_of_matches(list_matches: tuple):
 
     # List of matches to display in the window
     for count, match in enumerate(list_matches):
-        match.frame_for_match(my_frame, match.match_id)
+
+        a, b = match.participants
+        a.tk_image = open_image_and_resize(a.file_path, 200)
+        b.tk_image = open_image_and_resize(b.file_path, 200)
+        match.frame_for_match(my_frame, match.match_id, a.tk_image, b.tk_image)
 
     button_frame = Frame(fenetre, borderwidth=4, bg="gray")
     button_frame.pack(side=BOTTOM, padx=10, pady=10)
-    button = Button(button_frame, text="my button",command=fenetre.destroy)
+    button = Button(button_frame, text="Next Phase",command=fenetre.destroy)
     button.pack(padx=10, pady=10)
     #-------------------------------------------------------------------------------
     fenetre.mainloop()

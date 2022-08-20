@@ -23,6 +23,7 @@ def collect_entries(series_list, movies_nb):
     my_list = []
     n = 0
     while len(my_list) < movies_nb:
+        shuffle(series_list[n].elements_list)
         my_list.append(series_list[n].elements_list.pop())
         if len(series_list[n].elements_list) == 0:
             series_list.pop(n)

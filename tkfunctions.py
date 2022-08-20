@@ -27,7 +27,17 @@ def list_of_matches(list_matches: tuple):
     for count, match in enumerate(list_matches):
 
         a, b = match.participants
-        match.frame_for_match(my_frame, match.match_id)
+        main_frame, my_first_frame, my_second_frame = match.frame_for_match(my_frame, match.match_id)
+        # We consider all videos will get the mp4 extension
+        if "mp4" in a.filename:
+            first_button = a.display_button(my_first_frame)
+            second_button = b.display_button(my_second_frame)
+        # Everything elese will be image format
+        else:
+            a.tk_image = open_image_and_resize(a.file_path, 200)
+            b.tk_image = open_image_and_resize(b.file_path, 200)
+            a.display_picture(my_first_frame, a.tk_image)
+            b.display_picture(my_second_frame, b.tk_image)
 
     button_frame = Frame(fenetre, borderwidth=4, bg="gray")
     button_frame.pack(side=BOTTOM, padx=10, pady=10)

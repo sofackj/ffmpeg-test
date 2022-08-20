@@ -9,8 +9,8 @@ from pilfunctions import *
 from classes import Eligible, Collect_movies
 
 path = "test-app/outputs"
-# entry_path = "test-app/entries"
-entry_path = "/Users/juliensofack-kreutzer/Desktop/test/new"
+entry_path = "test-app/entries"
+# entry_path = "/Users/juliensofack-kreutzer/Desktop/test/new"
 
 def test():
     pass

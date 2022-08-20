@@ -1,8 +1,25 @@
-from cgitb import grey
+import os
 import subprocess
 
 from tkinter import *
 from pilfunctions import *
+
+class Eligible:
+    def __init__(self, file_path):
+        self.file_path = file_path
+        self.filename = self.file_path.split("/")[-1]
+        if len(self.filename.split("_")) > 1:
+            self.serie = self.filename.split("_")[-2]
+
+class Serie:
+    def __init__(self, serie):
+        self.id = serie
+        self.elements_list = []
+
+class Collect_movies:
+    def __init__(self, path):
+        self.elements_list = [Eligible(f"{path}/{video}") for video in os.listdir(path) if ".DS_" not in video]
+        self.series_list = [Serie(serie) for serie in set([movie.serie for movie in self.elements_list])]
 
 class Participant:
     """

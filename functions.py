@@ -3,15 +3,62 @@ import os
 from random import randint, shuffle, choice
 from shutil import move, copy
 
-from classes import Match, Participant
+from classes import Match, Participant, Eligible, Collect_movies
 
 #================================ Entries setup ================================
+def check_for_series(path: str):
+    for element in os.listdir(path):
+        if "_dia_lookfor" in element:
+            return True
+        else:
+            return False
 
-def list_files_from_path(path: str):
+def setup_entries(series_list, movies_list):
+    for serie in series_list:
+        for movie in movies_list:
+            if serie.id == movie.serie:
+                serie.elements_list.append(movie)
+
+def collect_entries(series_list, movies_nb):
+    my_list = []
+    n = 0
+    while len(my_list) < movies_nb:
+        my_list.append(series_list[n].elements_list.pop())
+        if len(series_list[n].elements_list) == 0:
+            series_list.pop(n)
+        else:
+            n += 1
+    return my_list
+
+def participants_list(entry_path, elements_nb):
+    # Check if series or not
+    if check_for_series(entry_path):
+        # Collectig objecs
+        my_collect = Collect_movies(entry_path)
+        # Catch movies by serie object
+        setup_entries(my_collect.series_list, my_collect.elements_list)
+        # Choose movies
+        elements_list = collect_entries(my_collect.series_list, elements_nb)
+    else:
+        # If no series just catch elements
+        elements_list = [Eligible(f"{entry_path}/{element}") for element in os.listdir(entry_path) if ".DS_" not in element][:elements_nb]
+        # Randomize the list
+        shuffle(elements_list)
+    # Return elements
+    return elements_list
+
+#================================ Output setup ================================
+
+def list_files_from_path(list_of_participants: list):
     # Create a list of Participants from a directory
-    final_list = [Participant(file, f"{path}/{file}") for file in os.listdir(path) if '.DS' not in file]
+    final_list = [Participant(participant.filename, participant.file_path) for participant in list_of_participants]
     shuffle(final_list)
     return final_list
+
+# def list_files_from_path(path: str):
+#     # Create a list of Participants from a directory
+#     final_list = [Participant(file, f"{path}/{file}") for file in os.listdir(path) if '.DS' not in file]
+#     return final_list
 
 def random_items_list(start_list: list, element_nb: int):
     if element_nb > len(start_list):

@@ -4,6 +4,7 @@ from random import randint, shuffle, choice
 from shutil import move, copy
 
 from classes import Match, Participant, Eligible, Collect_movies
+from tkfunctions import *
 
 #================================ Entries setup ================================
 def check_for_series(path: str):
@@ -56,11 +57,6 @@ def list_files_from_path(list_of_participants: list):
     shuffle(final_list)
     return final_list
 
-# def list_files_from_path(path: str):
-#     # Create a list of Participants from a directory
-#     final_list = [Participant(file, f"{path}/{file}") for file in os.listdir(path) if '.DS' not in file]
-#     return final_list
-
 def random_items_list(start_list: list, element_nb: int):
     if element_nb > len(start_list):
         print("The list of items is not enough... Reconsider the number of random elements")
@@ -99,12 +95,12 @@ def remove_directory_files(directory_path):
 
 #=========================== Setup matches and scores afterwards ===========================
 
-def create_matches(start_list: list):
+def create_matches(start_list: list, win_lose_bracket: str):
     start_list_copy = start_list.copy()
     final_list = []
     if len(start_list_copy)%2 == 0:
         for match_nb in range(int(len(start_list_copy)/2)):
-            final_list.append(Match((start_list_copy.pop(0), start_list_copy.pop(0)), match_nb+1))
+            final_list.append(Match((start_list_copy.pop(0), start_list_copy.pop(0)), match_nb+1, win_lose_bracket))
         return tuple(final_list)
 
 def setup_score(matches_list: tuple):
@@ -115,6 +111,12 @@ def setup_score(matches_list: tuple):
 
 #=========================== qualifications_for_next_phase ===========================
 
+def add_prefix(my_string: str, prefix: str):
+    new_name = my_string.split("_")
+    new_name.insert(-1, prefix)
+    new_name = "_".join(new_name)
+    return new_name
+
 def highest_value(start_list: list):
     highest_value = 0
     for participant in start_list:
@@ -122,22 +124,36 @@ def highest_value(start_list: list):
             highest_value = participant.score
     return highest_value
 
-def qualifications_for_next_phase(path: str, start_list: list, tournament_phase: int):
+def qualifications_for_next_phase(path: str, start_list: list):
     final_list = []
+    losers_list = []
     qualification_factor = highest_value(start_list)
     for participant in start_list:
         if participant.score == qualification_factor:
             final_list.append(participant)
         else:
-            participant.new_file_path = f"{path}/{str(tournament_phase)}_{participant.filename}"
-            move(participant.file_path, participant.new_file_path)
-    return final_list
+            losers_list.append(participant)
+            new_file_name = add_prefix(participant.filename, str(participant.score))
+            new_file_path = f"{path}/{new_file_name}"
+            move(participant.file_path, new_file_path)
+            participant.filename = new_file_name
+            participant.file_path = new_file_path
+    return final_list, losers_list
+#=========================== Losers Bracket ===========================
 
+def bracket_steps(start_list: list, path, bracket_type: str):
+    tournament = create_matches(start_list, bracket_type)
+    list_of_matches(tournament)
+    setup_score(tournament)
+    start_list, losers_list = qualifications_for_next_phase(path, start_list)
+    return start_list, losers_list
 #====================================================================================
-
-def final_participant(path: str, participant: object, tournament_phase: int):
-    participant.new_file_path = f"{path}/{str(tournament_phase)}_{participant.filename}"
-    move(participant.file_path, participant.new_file_path)
+def final_participant(path: str, participant: object):
+    new_file_name = add_prefix(participant.filename, str(participant.score))
+    new_file_path = f"{path}/{new_file_name}"
+    move(participant.file_path, new_file_path)
+    participant.filename = new_file_name
+    participant.file_path = new_file_path
                 
 if __name__ == '__main__':
     print("\nThis file is not functional... Try with the app.py file\n")

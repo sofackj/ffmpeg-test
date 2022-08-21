@@ -13,7 +13,11 @@ entry_path = "test-app/entries"
 # entry_path = "/Users/juliensofack-kreutzer/Desktop/test/new"
 
 def test():
-    pass
+    my_string = "hello"
+    hello = my_string.split("_")
+    hello.insert(-1, "a")
+    hello = "_".join(hello)
+    print(hello)
 
 def app(number_of_media):
     # Clean the outputs diretory
@@ -29,19 +33,26 @@ def app(number_of_media):
     # Duplicate the list to keep a copy in case <- pop will be used
     files_list = origin_list.copy()
 
-    phase = 0
-
     while len(files_list) > 1:
-        tournament = create_matches(files_list)
+        tournament = create_matches(files_list, "Winner Bracket Match")
         list_of_matches(tournament)
         setup_score(tournament)
-        files_list = qualifications_for_next_phase(path, files_list, phase)
-        phase += 1
+        files_list, losers_list = qualifications_for_next_phase(path, files_list)
+        while len(losers_list) > 1:
+            tournament = create_matches(losers_list, "Loser Bracket Match")
+            list_of_matches(tournament)
+            setup_score(tournament)
+            loser_winners_list, losers_list = qualifications_for_next_phase(path, losers_list)
+            while len(loser_winners_list) >1:
+                tournament = create_matches(loser_winners_list, "Loser Bracket Match")
+                list_of_matches(tournament)
+                setup_score(tournament)
+                loser_winners_list, optional_list = qualifications_for_next_phase(path, loser_winners_list)
     
     the_winner = files_list[0]
-    final_participant(path, the_winner, phase)
+    final_participant(path, the_winner)
     the_winner.check_participant(the_winner.new_file_path)
 
 if __name__ == '__main__':
-    app(8)
+    app(16)
     # test()

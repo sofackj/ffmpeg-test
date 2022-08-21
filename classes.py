@@ -73,9 +73,10 @@ class Match:
     """
     Match of the tournament
     """
-    def __init__(self, participants, match_id):
+    def __init__(self, participants, match_id, win_lose_bracket):
         self.participants = participants
         self.match_id = match_id
+        self.win_lose_bracket = win_lose_bracket
         self.winner = None
     
     def frame_for_match(self, window, match_id):
@@ -85,7 +86,7 @@ class Match:
         my_frame.pack(padx=5, pady=5)
         # my_frame.grid(row=x, column=y, padx=20, pady=20)
         # Match label
-        my_label = Label(my_frame, text=f"Match {match_id}")
+        my_label = Label(my_frame, text=f"{self.win_lose_bracket} {match_id}")
         my_label.pack()
 
         # Pick up result of the match in self.winner with radiobuttons
@@ -102,10 +103,6 @@ class Match:
         second_rb = second.radiobutton(my_second_frame, self.winner)
         
         return my_frame, my_first_frame, my_second_frame
-
-class Window(Tk):
-    def __init__(self):
-        print("hello world")
 
 if __name__ == '__main__':
     print("\nThis file is not functional... Try with the app.py file\n")

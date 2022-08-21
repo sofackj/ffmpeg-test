@@ -34,25 +34,16 @@ def app(number_of_media):
     files_list = origin_list.copy()
 
     while len(files_list) > 1:
-        tournament = create_matches(files_list, "Winner Bracket Match")
-        list_of_matches(tournament)
-        setup_score(tournament)
-        files_list, losers_list = qualifications_for_next_phase(path, files_list)
+        files_list, losers_list = bracket_steps(files_list, path, "Winner Bracket Match")
         while len(losers_list) > 1:
-            tournament = create_matches(losers_list, "Loser Bracket Match")
-            list_of_matches(tournament)
-            setup_score(tournament)
-            loser_winners_list, losers_list = qualifications_for_next_phase(path, losers_list)
+            loser_winners_list, losers_list = bracket_steps(losers_list, path, "Loser Bracket Match")
             while len(loser_winners_list) >1:
-                tournament = create_matches(loser_winners_list, "Loser Bracket Match")
-                list_of_matches(tournament)
-                setup_score(tournament)
-                loser_winners_list, optional_list = qualifications_for_next_phase(path, loser_winners_list)
+                loser_winners_list, optional_list = bracket_steps(loser_winners_list, path, "Loser Bracket Match")
     
     the_winner = files_list[0]
     final_participant(path, the_winner)
     the_winner.check_participant(the_winner.new_file_path)
 
 if __name__ == '__main__':
-    app(16)
+    app(8)
     # test()

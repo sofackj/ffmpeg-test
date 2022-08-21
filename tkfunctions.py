@@ -5,7 +5,7 @@ from tkVideoPlayer import TkinterVideo
 def list_of_matches(list_matches: tuple):
     # Window fo matches
     fenetre = Tk()
-    fenetre.geometry("750x600")
+    fenetre.geometry("1000x600+50+50")
     fenetre.resizable(False, False)
     fenetre["bg"] = "white"
     #-----frame examples -----------------------------------------------------------

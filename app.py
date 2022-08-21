@@ -9,15 +9,11 @@ from pilfunctions import *
 from classes import Eligible, Collect_movies
 
 path = "test-app/outputs"
-entry_path = "test-app/entries"
-# entry_path = "/Users/juliensofack-kreutzer/Desktop/test/new"
+# entry_path = "test-app/entries"
+entry_path = "/Users/juliensofack-kreutzer/Desktop/test/new"
 
 def test():
-    my_string = "hello"
-    hello = my_string.split("_")
-    hello.insert(-1, "a")
-    hello = "_".join(hello)
-    print(hello)
+    pass
 
 def app(number_of_media):
     # Clean the outputs diretory
@@ -34,10 +30,13 @@ def app(number_of_media):
     files_list = origin_list.copy()
 
     while len(files_list) > 1:
+        # Process for winners bracket
         files_list, losers_list = bracket_steps(files_list, path, "Winner Bracket Match")
         while len(losers_list) > 1:
+            # Process for losers bracket
             loser_winners_list, losers_list = bracket_steps(losers_list, path, "Loser Bracket Match")
             while len(loser_winners_list) >1:
+                # Process for winners in losers bracket
                 loser_winners_list, optional_list = bracket_steps(loser_winners_list, path, "Loser Bracket Match")
     
     the_winner = files_list[0]

@@ -72,12 +72,13 @@ class Participant:
         return my_button
     
     def display_video(self, window):
+        # Display videos
         self.test = TkinterVideo(master=window, scaled=True)
         self.test.load(self.file_path)
         self.test.pack(padx=10, pady=10, expand=True, fill="both")
         self.test.play()
         def play_file():
-             self.test.stop()
+             self.test.play()
         my_button = Button(window, text="Play", command=play_file)
         my_button.pack()
 

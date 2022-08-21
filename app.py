@@ -44,5 +44,5 @@ def app(number_of_media):
     the_winner.check_participant(the_winner.new_file_path)
 
 if __name__ == '__main__':
-    app(8)
+    app(4)
     # test()

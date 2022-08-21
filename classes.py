@@ -3,6 +3,7 @@ import subprocess
 
 from tkinter import *
 from pilfunctions import *
+from tkVideoPlayer import TkinterVideo
 
 class Eligible:
     def __init__(self, file_path):
@@ -34,6 +35,7 @@ class Participant:
         self.tk_image = None
         self.score = 0
         self.id = None
+        self.test = None
     
     def check_participant(self, path):
     # Display participants through the subprocess module
@@ -42,7 +44,7 @@ class Participant:
     
     def frame_participant(self, window, frame_side):
         # Frame to includes the widgets of the participant
-        fr = Frame(window, borderwidth=4)
+        fr = Frame(window, borderwidth=4, bg="orange")
         fr.pack(padx=20, pady=20, side=frame_side)
         return fr
     
@@ -59,7 +61,7 @@ class Participant:
     
     def display_button(self, window):
         # Button to display picture
-        my_button =  Button(window, text="show", command=lambda : self.check_participant(self.file_path))
+        my_button =  Button(window, text="Open", command=lambda : self.check_participant(self.file_path))
         my_button.pack()
         return my_button
     
@@ -68,6 +70,16 @@ class Participant:
         my_button =  Button(window, image=img, command=lambda : self.check_participant(self.file_path))
         my_button.pack()
         return my_button
+    
+    def display_video(self, window):
+        self.test = TkinterVideo(master=window, scaled=True)
+        self.test.load(self.file_path)
+        self.test.pack(padx=10, pady=10, expand=True, fill="both")
+        self.test.play()
+        def play_file():
+             self.test.stop()
+        my_button = Button(window, text="Play", command=play_file)
+        my_button.pack()
 
 class Match:
     """
@@ -82,7 +94,7 @@ class Match:
     def frame_for_match(self, window, match_id):
         first, second = self.participants
         # Main frame
-        my_frame = Frame(window, borderwidth=4)
+        my_frame = Frame(window, borderwidth=4, bg="red")
         my_frame.pack(padx=5, pady=5)
         # my_frame.grid(row=x, column=y, padx=20, pady=20)
         # Match label

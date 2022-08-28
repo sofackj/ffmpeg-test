@@ -52,7 +52,7 @@ def list_of_matches(list_matches: tuple):
                 k.test.stop()
         fenetre.destroy()
 
-    button = Button(button_frame, text="Next Phase",command=fenetre.destroy)
+    button = Button(button_frame, text="Next Phase",command=stop_and_quit)
     button.pack(padx=10, pady=10)
     #-------------------------------------------------------------------------------
     fenetre.mainloop()

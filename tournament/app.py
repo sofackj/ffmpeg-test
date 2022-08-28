@@ -1,7 +1,5 @@
 import os
 
-from random import shuffle
-
 from functions import *
 from tkfunctions import *
 from pilfunctions import *

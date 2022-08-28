@@ -1,6 +1,6 @@
 import os
 
-from random import randint, shuffle, choice
+from random import shuffle
 from shutil import move, copy
 
 from classes import Match, Participant, Eligible, Collect_movies

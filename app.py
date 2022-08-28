@@ -7,8 +7,8 @@ from tkfunctions import *
 from pilfunctions import *
 
 path = "test-app/outputs"
-# entry_path = "test-app/entries"
-entry_path = "/Users/juliensofack-kreutzer/Desktop/test/new"
+entry_path = "/Users/juliensofack-kreutzer/Desktop/test/newPics"
+# entry_path = "/Users/juliensofack-kreutzer/Desktop/test/newVids"
 
 def test():
     pass
